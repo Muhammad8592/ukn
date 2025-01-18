@@ -1740,7 +1740,7 @@ color: white;
 .time-section {
     border: 1px solid var(--border-light);
     overflow: hidden;
-    margin-bottom: 1rem;
+
     position: relative;
 }
 
