@@ -1823,6 +1823,7 @@ color: white;
 .arrow-icon {
     width: 20px;
     height: 20px;
+    margin-top:15px;
     position: relative;
 }
 
