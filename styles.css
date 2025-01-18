@@ -517,7 +517,7 @@ body {
 }
 
 .details-container {
-    max-width: 1200px;
+    max-width: 1320px;
     margin: 0 auto;
     padding: 0 1rem;
 }
@@ -596,14 +596,36 @@ body {
     height: 100%;
     object-fit: cover;
 }
-
 .back-to-gallery {
-    color: #8B1E29;
-    text-decoration: none;
+    color: #8B1E29; /* Rich red color */
+    text-decoration: none; /* Remove underline */
+    background-color: #ffffff; /* Light background for the button */
     display: inline-flex;
     align-items: center;
+    padding: 10px 20px; /* Add padding for better spacing */
     margin-bottom: 1rem;
+    border-radius: 25px; /* Rounded corners */
+    font-weight: 500; /* Slightly bold text */
+    transition: all 0.3s ease; /* Smooth transition */
+ 
 }
+
+.back-to-gallery:hover {
+    background-color: #8B1E29; /* Change background color on hover */
+    color: white; /* Change text color to white */
+    transform: translateY(-2px); /* Slight lift effect */
+   
+}
+
+.back-to-gallery svg {
+    margin-right: 8px; /* Space between text and icon */
+    transition: all 0.3s ease;
+}
+
+.back-to-gallery:hover svg {
+    transform: translateX(4px); /* Slight move of the icon on hover */
+}
+
 
 @media (max-width: 768px) {
     .gallery-grid {
@@ -745,7 +767,7 @@ body {
 /* projects section */
 
 .properties-section {
-    padding: 60px 0;
+    padding: 70px 0;
     position: relative;
 
 }
@@ -881,18 +903,17 @@ body {
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
-
 .navbar-custom {
-    background-color: transparent;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 1));
     width: 100%;
-    max-width: 1400px;
+    max-width: 1310px;
     margin: 0 auto;
-
     border: 1px solid rgb(236, 236, 236);
     border-radius: 12px;
     padding: 15px 25px;
     transition: all 0.3s ease;
 }
+
 
 /* Remove border and shadow when scrolled */
 .scrolled .navbar-custom {
@@ -1076,7 +1097,7 @@ body {
 
 .promo-container {
     width: 100%;
-    max-width: 1400px;
+    max-width: 1300px;
     position: relative;
     border-radius: 15px;
     overflow: hidden;
@@ -1094,6 +1115,20 @@ body {
     width: 100%;
     object-fit: cover;
     border-radius: 15px;
+}
+.carousel-item::before {
+    content: ""; /* Create an empty overlay element */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); /* Left side black shade, right side transparent */
+    border-radius: 15px;
+    pointer-events: none; /* Ensure overlay doesn't interfere with interactions */
+}
+.carousel-item img {
+    z-index: 0; /* Ensure the image is behind the overlay */
 }
 
 .overlay {
@@ -1177,14 +1212,18 @@ body {
     z-index: 3;
 }
 
-.badge-logo {
+.reserved-badge img {
+width: 130px;
+}
+
+/* .badge-logo {
     width: 100px;
     height: 100px;
     margin: 0 auto;
     display: block;
     background: #c41e3a;
     border-radius: 50%;
-}
+} */
 
 .badge-text {
     text-align: center;
@@ -1818,7 +1857,7 @@ color: white;
     background-size: contain; /* Scale the image proportionally */
     background-blend-mode: overlay; 
     padding: 4rem 2rem;
-    max-width: 1330px;
+    max-width: 1300px;
     margin: 0 auto; /* Center the section horizontally */
     border-radius: 1.5rem;
     position: relative;
