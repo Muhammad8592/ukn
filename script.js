@@ -1,58 +1,96 @@
 // Sticky header functionality
-    window.addEventListener('scroll', function () {
-        const navbar = document.querySelector('.navbar-wrapper');
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Elements
+    const navbar = document.querySelector('.navbar-wrapper');
+    const navbarToggler = document.querySelector('.navbar-toggler');
+    const navbarCollapse = document.querySelector('.navbar-collapse');
+
+    // Toggle menu function
+    function toggleMenu() {
+        if (navbarCollapse.classList.contains('show')) {
+            navbarCollapse.classList.remove('show');
+            navbarToggler.setAttribute('aria-expanded', 'false');
+        } else {
+            navbarCollapse.classList.add('show');
+            navbarToggler.setAttribute('aria-expanded', 'true');
+        }
+    }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const isClickInside = navbar.contains(event.target);
+        
+        if (!isClickInside && navbarCollapse.classList.contains('show')) {
+            navbarCollapse.classList.remove('show');
+            navbarToggler.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    // Close menu when clicking on a nav link
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (navbarCollapse.classList.contains('show')) {
+                navbarCollapse.classList.remove('show');
+                navbarToggler.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+
+    // Toggle menu on button click
+    navbarToggler.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent document click from immediately closing
+        toggleMenu();
+    });
+
+    // Scroll functionality
+    window.addEventListener('scroll', function() {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
     });
+});
+
 
 
 
   //location section
-document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
     const timeHeaders = document.querySelectorAll('.time-header');
+    
+    // Initialize first section as active
+    const firstHeader = timeHeaders[0];
+    firstHeader.classList.add('active');
+    firstHeader.classList.remove('collapsed');
+    
     timeHeaders.forEach(header => {
-
         const targetId = header.getAttribute('data-bs-target');
         const collapseElement = document.querySelector(targetId);
 
         header.addEventListener('click', function(e) {
             e.preventDefault();
 
-            header.classList.toggle('collapsed');
+            // Remove active class from all headers
+            timeHeaders.forEach(h => {
+                h.classList.remove('active');
+                h.classList.add('collapsed');
+            });
 
-            header.classList.toggle('active');
+            // Hide all content sections
+            document.querySelectorAll('.time-content').forEach(content => {
+                content.classList.remove('show');
+            });
+
+            // Toggle current section
             if (collapseElement) {
-                if (collapseElement.classList.contains('show')) {
-                    collapseElement.classList.remove('show');
-                } else {
-
-                    document.querySelectorAll('.time-content.show').forEach(content => {
-                        if (content !== collapseElement) {
-                            content.classList.remove('show');
-                            const associatedHeader = document.querySelector(`[data-bs-target="#${content.id}"]`);
-                            if (associatedHeader) {
-                                associatedHeader.classList.add('collapsed');
-                                associatedHeader.classList.remove('active');
-                            }
-                        }
-                    });
-                    
-                    collapseElement.classList.add('show');
-                }
+                header.classList.toggle('collapsed');
+                header.classList.toggle('active');
+                collapseElement.classList.toggle('show');
             }
         });
-        
-        // Initialize the active state
-        if (collapseElement && collapseElement.classList.contains('show')) {
-            header.classList.add('active');
-            header.classList.remove('collapsed');
-        } else {
-            header.classList.add('collapsed');
-            header.classList.remove('active');
-        }
     });
 });
   //location section end
@@ -164,10 +202,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
  // faq
  
-      document.querySelectorAll('.faq-answer').forEach(answer => {
+    // Hide all answers initially
+    document.querySelectorAll('.faq-answer').forEach(answer => {
         answer.style.display = 'none';
     });
 
+    // Add click event listeners to FAQ items
     document.querySelectorAll('.faq-item').forEach(item => {
         item.addEventListener('click', function() {
             const answer = this.querySelector('.faq-answer');
@@ -188,3 +228,25 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     // faq
+
+ // a life fide animation
+    document.addEventListener('DOMContentLoaded', () => {
+        const fadeElements = document.querySelectorAll('.fade-in');
+    
+        const observer = new IntersectionObserver(
+            (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                        observer.unobserve(entry.target); // Stop observing once the animation is triggered
+                    }
+                });
+            },
+            {
+                threshold: 0.5, // Trigger when 50% of the element is visible
+            }
+        );
+    
+        fadeElements.forEach(element => observer.observe(element));
+    });
+    
